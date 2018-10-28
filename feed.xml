@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>The Week Before Semester</title>
+		<description>This is all you need for your semester exams</description>
+		<link>http://localhost:4000</link>
+		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Introduction and The Design of HDFS</title>
+				<description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;b&gt;Distributed File Systems:&lt;/b&gt; Filesystems that manage the storage across a network of machines.&lt;/p&gt;
+
+&lt;p&gt;Hadoop comes in with a DFS called HDFS(Hadoop Distributed File System).&lt;/p&gt;
+
+&lt;h2 id=&quot;the-design-of-hdfs&quot;&gt;The Design of HDFS&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HDFS is a filesystem designed for storing very large files with streaming data access patterns, running on clusters of commodity hardware
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;b&gt;Streaming data access:&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;HDFS deals with processing large amount of data a large number of times over time hence it believes that the time taken to read the whole record is more important than the time taken to read one record (i.e average read rate is more important than instantaneous read rate).&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Commodity Hardware:&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;Hadoop doesn’t require reliable and expensive hardware. Instead it is designed to run on clusters of regular daily use computers. Even when a node(a computer) fails, hadoop is robust and can continue without any interruption.&lt;/p&gt;
+
+&lt;p&gt;Hence HDFS is not suitable for applications which require:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Low latency data access.&lt;/li&gt;
+  &lt;li&gt;Working with a lot of small files.&lt;/li&gt;
+  &lt;li&gt;Multiple writers and lot of random modifications to files.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+				<pubDate>Sun, 28 Oct 2018 00:00:00 +0530</pubDate>
+				<link>http://localhost:4000/bigdata/2018/10/28/HadoopDistributedFilesystem.html</link>
+				<guid isPermaLink="true">http://localhost:4000/bigdata/2018/10/28/HadoopDistributedFilesystem.html</guid>
+			</item>
+		
+			<item>
+				<title>HDFS Concepts</title>
+				<description>&lt;h2 id=&quot;blocks&quot;&gt;Blocks&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/images/block.jpg&quot; alt=&quot;Failover&quot; height=&quot;281px&quot; width=&quot;507px&quot; align=&quot;center&quot; /&gt;
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;blocksize: &lt;/b&gt; The minimum amount of data that a disk can read/write. This is usually hidden from the user.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;file system: few kilobytes.&lt;/li&gt;
+  &lt;li&gt;disk: 512 bytes.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In HDFS,&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The &lt;i&gt;default block size is 128 MB&lt;/i&gt;. This large size is to minimize the cost of seeks.&lt;/li&gt;
+  &lt;li&gt;Files(large) in HDFS are &lt;i&gt;broken into blocks&lt;/i&gt; and stored as independent units.&lt;/li&gt;
+  &lt;li&gt;If a file is smaller than a single block. Unlike file systems it doesnt occupy a full block of undelying storage.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This &lt;b&gt;block abstraction&lt;/b&gt; has several advantages:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A file can be larger than any single disk in the distributed system&lt;/li&gt;
+  &lt;li&gt;It simplifies the storage subsystem as,
+    &lt;ul&gt;
+      &lt;li&gt;Its easy to calculate how many blocks can be stored at a single node.&lt;/li&gt;
+      &lt;li&gt;Eliminates metadata concern(as blocks are simple chunks of data are not a file anymore).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Blocks can be replicated (default value is 3) to make the system available and fault tolerant.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;name-nodes-and-data-nodes&quot;&gt;Name Nodes and Data Nodes&lt;/h2&gt;
+
+&lt;p&gt;HDFS cluster is made up of two types of nodes which work in a master worker fashion. They are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Name node&lt;/li&gt;
+  &lt;li&gt;Data node&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The client is presented with a file system interface to interact with HDFS so the functioning of name node and data node is transparent.&lt;/p&gt;
+
+&lt;h3 id=&quot;name-node&quot;&gt;Name Node:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;manages the file system namespace&lt;/li&gt;
+  &lt;li&gt;maintains file system tree and meta data for all the files and directories&lt;/li&gt;
+  &lt;li&gt;The above information is stored persistantly on the disk as two files:
+    &lt;ul&gt;
+      &lt;li&gt;Namespace image&lt;/li&gt;
+      &lt;li&gt;edit log&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Also has infomation about rhe locations of data nodes on which a file’s blocks are stored.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;datanode&quot;&gt;Datanode:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;workhorses of the system.&lt;/li&gt;
+  &lt;li&gt;store &amp;amp; retrive blocks when told to&lt;/li&gt;
+  &lt;li&gt;Periodically report to namenode what blocks they are holding.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Without name node HDFS can’t be used. Hence it is important to make namenode resilient to failure. Hadoop supports two ways of doing this:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Backup files that make up the persistant state of the systems metadata&lt;/b&gt;(back up metadata):
+    &lt;ul&gt;
+      &lt;li&gt;hadoop can be configured to write persisant state infomation to multiple Files systems i.e to local disk as well as a Network Files system mount(attached).&lt;/li&gt;
+      &lt;li&gt;These writes need to be &lt;b&gt;synchronous&lt;/b&gt; and &lt;b&gt;atomic&lt;/b&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Have a &lt;b&gt;Secondary Name Node:&lt;/b&gt;
+    &lt;ul&gt;
+      &lt;li&gt;despite of the name it doesn’t act as a name node.&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;main role:&lt;/b&gt; Periodically merge the namespace image with edit log to prevent it from becoming too large and keep a copy of the merged image.&lt;/li&gt;
+      &lt;li&gt;It runs on a seperate physical machine.&lt;/li&gt;
+      &lt;li&gt;The state of SNN lags from that of primary. So incase of NN failure data loss is certain.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Hence, if the NN fails we copy the metadata files on NFS to SNN and run it as primary.&lt;/p&gt;
+
+&lt;h2 id=&quot;hdfs-federation&quot;&gt;HDFS Federation&lt;/h2&gt;
+
+&lt;p&gt;Name node stores reference to every file’s blocks in the file system. So, if a file system has large number of files the memory becomes and issue. &lt;b&gt;#federationTotheRescue&lt;/b&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Federation allows clustes to scale by adding name nodes to manage a portion of the file system.&lt;/li&gt;
+  &lt;li&gt;Each name node manages a seperate namespace volume. Which is made up of:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;namespace metadata&lt;/b&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;block pool:&lt;/b&gt; blocks for each files&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Ex: one name node can manage the files and directories under /user, the other under /share etc.&lt;/li&gt;
+  &lt;li&gt;NSV are independent of each other:
+    &lt;ul&gt;
+      &lt;li&gt;failure of one doesnt affect each other.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;However the block pools are not partioned i.e data nodes store blocks from multiple federations.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;high-availability&quot;&gt;High Availability&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/images/highAvailability.jpg&quot; alt=&quot;Failover&quot; height=&quot;281px&quot; width=&quot;507px&quot; align=&quot;center&quot; /&gt;
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Name node is the &lt;b&gt;SPOF&lt;/b&gt;(single point of failure) of HDFS. If a name node fails:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;All clients can’t read, write or list files as it is the sole repository of metadata&lt;/li&gt;
+  &lt;li&gt;Hence, whole HDFS is out of service.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So if a name node fails, To recover:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Admin starts a new name node with one of the file system metadata replicas. However this new name node wont serve until:
+    &lt;ul&gt;
+      &lt;li&gt;It has loaded namespace image into memory.&lt;/li&gt;
+      &lt;li&gt;replayed the edit log.&lt;/li&gt;
+      &lt;li&gt;receives enough block reports from data nodes to leave safe mode.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;And configures the data nodes and clients to use this name node.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The above recovery process for a sufficiently large cluster takes atleast 30min. Hadoop solved this problem by adding support for &lt;b&gt;High Availability&lt;/b&gt;. However this requires a few changes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;There are a pair of name nodes:
+    &lt;ul&gt;
+      &lt;li&gt;one active&lt;/li&gt;
+      &lt;li&gt;one standby: if active fails it takes over without a signficant delay.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;These name nodes must use &lt;b&gt;highly available shared storage&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;Data nodes must send block reports to both name nodes&lt;/li&gt;
+  &lt;li&gt;Client must be configured to handle failure.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are two choices for highly available shared storage:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;NFS filer&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Quorum Journal Manager(QJM):&lt;/b&gt;
+    &lt;ul&gt;
+      &lt;li&gt;runs a group of journal nodes. Typically 3&lt;/li&gt;
+      &lt;li&gt;each edit must be written to a majority of journal nodes.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;failover-and-fencing&quot;&gt;Failover and Fencing&lt;/h3&gt;
+
+&lt;p&gt;The transistion from active to stand by name nodes is manageb by an entity known as failover controller. default is ZooKeeper Implementation(ensure only one name node is active).&lt;/p&gt;
+
+&lt;p&gt;Each name node runs a light weight failover controller process whose job is to monitor and trigger a failover if it fails.&lt;/p&gt;
+
+&lt;p&gt;This failure can be issued manually in case of maintainence. This is known as &lt;b&gt;graceful failure&lt;/b&gt;. Since failover controller arranges transistion for name nodes to switch roles.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/images/failover.gif&quot; alt=&quot;Failover&quot; /&gt;
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Incase, of an &lt;b&gt;ungraceful failover:&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;It is impossible to know whether failed namenode has stopped running.&lt;/li&gt;
+  &lt;li&gt;“The process of preventing the previously active namenode from casuing corruption” - &lt;b&gt;#fencing&lt;/b&gt;. Some fencing mechanisms are :&lt;/li&gt;
+  &lt;li&gt;Revoking name node access to shared storage.&lt;/li&gt;
+  &lt;li&gt;Disabling its network port.&lt;/li&gt;
+  &lt;li&gt;STONITH: “Shoot the other node in the Head”. Forcibly shutdown the host machine.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+				<pubDate>Sun, 28 Oct 2018 00:00:00 +0530</pubDate>
+				<link>http://localhost:4000/bigdata/2018/10/28/HDFSConcepts.html</link>
+				<guid isPermaLink="true">http://localhost:4000/bigdata/2018/10/28/HDFSConcepts.html</guid>
+			</item>
+		
+			<item>
+				<title>Strings</title>
+				<description>&lt;h1 id=&quot;strings&quot;&gt;Strings&lt;/h1&gt;
+
+&lt;h2 id=&quot;c&quot;&gt;C&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;Array of characters.&lt;/li&gt;
+  &lt;li&gt;Unlike Character Array Terminate with a ‘\0’&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;declaration&quot;&gt;Declaration&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;char str[size + 1] \\ stored in memory just like other arrays i.e in stack &lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;+1 for ‘\0’&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;initialization&quot;&gt;Initialization&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- char str[] = &quot;AurimusBlack&quot;;
+
+- char str[50] = &quot;Aurimus Black&quot;;
+
+- char str[] = {'A','u','r','i','m','u', 's',\0'};
+
+- char str[8] = {'A','u','r','i','m','u', 's','\0'};
+
+- char *str  =  &quot;Ab&quot; // read only trying to modify gives segmentation fault. Stored in data segment
+
+- char *str;
+int size = 3; /*one extra for ‘\0’*/
+str = (char *)malloc(sizeof(char)*size);
+*(str+0) = 'A'; 
+*(str+1) = 'b';    
+*(str+3) = '\0'; /* Dynamic allocated are stored in heap */ 
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;stringh--cstring&quot;&gt;string.h / cstring&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;strlen(s)&lt;/strong&gt; - return length of string number of characters before ‘\0’&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strcpy(dest,source)&lt;/strong&gt; - copy string source to dest and return dest.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strncpy(dest,source,numberOfCharacters)&lt;/strong&gt; - copy at most n characters of source to dest and terminates i.e:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;char str1[] = &quot;aurimus&quot;;
+
+// str1 in memory: | A | u | r | i | m | u | s | \0 |
+
+char str2[] = &quot;black&quot;;
+
+// str2 in memory: | B | l | a | c | k | \0 |
+
+strcpy(str1,str2);
+
+// str1 in memory after copying: | B | l | a | c | k | \0 | s | \0 |
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;cheat-straction-you-want-to-perform-shortened-to-three-letters&quot;&gt;Cheat: str(action you want to perform shortened to three letters)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;strcmp(s,t)&lt;/strong&gt; - compare strings s and t and return first difference. i.e:
+    &lt;ol&gt;
+      &lt;li&gt;s &amp;gt; t : positive number&lt;/li&gt;
+      &lt;li&gt;s == t : zero&lt;/li&gt;
+      &lt;li&gt;s &amp;lt; t : negative number&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strncmp(s,t,n)&lt;/strong&gt; stop after at most n characters.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strcat(str1,str2)&lt;/strong&gt; - Concatenates str2 at the end of str1.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strncat(str1,str2,n)&lt;/strong&gt; - Appends a portion of str2 to str1.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strchr(str1,&amp;lt;char&amp;gt;)&lt;/strong&gt; - Returns pointer to first occurrence of char in str1.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strrchr(str1,&amp;lt;char&amp;gt;)&lt;/strong&gt; - Returns pointer to last occurrence of char in str1.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strstr(str1,str2)&lt;/strong&gt; - Returns pointer to first occurrence of str2 in str1.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strrstr(str1,str2)&lt;/strong&gt; - Returns pointer to last occurrence of str2 in str1.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strlwr(str)&lt;/strong&gt; - Converts string to lowercase and returns the converted string.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strupr(str)&lt;/strong&gt; - Converts string to uppercase and returns the converted string.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;strrev(str)&lt;/strong&gt; - Reverses the given string&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sample Program :&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include&amp;lt;stdio.h&amp;gt;
+#include&amp;lt;string.h&amp;gt;
+int main(){
+    char str1[] = &quot;aurimus&quot;;
+    char str2[] = &quot;black&quot;;
+    char str3[] = &quot;hey&quot;;
+    char str4[] = &quot;Hello&quot;;
+    char str5[] = &quot;World&quot;;
+    printf(&quot;\nsize : %d\n&quot;, strlen(str1));
+    printf(&quot;strcpy(str1,str2) : %s\n&quot;, strcpy(str1,str2));
+    printf(&quot;strncpy(str3,str2,3) : %s\n&quot;, strncpy(str3,&quot;bla&quot;,3));
+    printf(&quot;strcmp(str1,str3) : %d\n&quot;,strcmp(str1,str3));
+    printf(&quot;strcmp(str1,str1) : %d\n&quot;,strcmp(str1,str1));
+    printf(&quot;strcmp(str3,str1) : %d\n&quot;,strcmp(str3,str1));
+    printf(&quot;str4 : %s, str5 : %s\n&quot;,str4,str5);
+    printf(&quot;strcat(str4,str5) : %s\n&quot;,strcat(str4,str5));
+    printf(&quot;strchr(str4,'l') : address : %d\n&quot;,strchr(str4,'l'));
+    printf(&quot;strrchr(str4,'l') :address :%d\n&quot;,strrchr(str4,'l'));
+    printf(&quot;str4 : %s, str5 : %s\n&quot;,str4,str5);
+    printf(&quot;strstr(str4,str5): %d&quot;,strstr(str4,str5));
+    printf(&quot;str4 : %s, str5 : %s\n&quot;,str4,str5);
+
+    return 0;
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;c-1&quot;&gt;C++&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;stdstring-class&quot;&gt;std::string class&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;append() 	Appends a string to the end of the current string.&lt;/li&gt;
+  &lt;li&gt;assign() 	Fills the string with a given value.&lt;/li&gt;
+  &lt;li&gt;at() 	Returns a reference to the character at the given index.&lt;/li&gt;
+  &lt;li&gt;begin() 	Returns an iterator to the first element of the string.&lt;/li&gt;
+  &lt;li&gt;c_str() 	Returns a pointer to an array of characters that represent the current string.&lt;/li&gt;
+  &lt;li&gt;capacity() 	Returns the number of allocated positions in the string.&lt;/li&gt;
+  &lt;li&gt;clear() 	Removes all the characters from the string.&lt;/li&gt;
+  &lt;li&gt;compare() 	Compares two strings. Retuns 0 if this &amp;lt; str; 0 if this == str; &amp;gt;0 if this &amp;gt; str.&lt;/li&gt;
+  &lt;li&gt;copy() 	Copies a number of positions of the string into an array of characters.&lt;/li&gt;
+  &lt;li&gt;data() 	Returns a pointer to the first character in a string.&lt;/li&gt;
+  &lt;li&gt;empty() 	Returns true if the string is empty.&lt;/li&gt;
+  &lt;li&gt;end() 	Returns an iterator to the position just after the last element of the string.&lt;/li&gt;
+  &lt;li&gt;erase() 	Erases a set of characters from the string.&lt;/li&gt;
+  &lt;li&gt;find() 	Finds a set of characters in a string.&lt;/li&gt;
+  &lt;li&gt;find_first_not_of() 	Finds the first occurence of the absence of a set of characters in the string.&lt;/li&gt;
+  &lt;li&gt;find_first_of() 	Finds the first occurence of a set of characters in the string.&lt;/li&gt;
+  &lt;li&gt;find_last_not_of() 	Finds the last occurence of the absence of a set of characters in the string.&lt;/li&gt;
+  &lt;li&gt;find_last_of() 	Finds the last occurence of a set of characters in the string.&lt;/li&gt;
+  &lt;li&gt;getline() 	Reads a line from standard input and saves it in a string.&lt;/li&gt;
+  &lt;li&gt;insert() 	Inserts a character or a set o characters from a given position in a string.&lt;/li&gt;
+  &lt;li&gt;length() 	Returns the number of elements in the string.&lt;/li&gt;
+  &lt;li&gt;max_size() 	Returns the maximum number of elements a vector can hold.&lt;/li&gt;
+  &lt;li&gt;push_back() 	Inserts a character at the end of the string.&lt;/li&gt;
+  &lt;li&gt;rbegin() 	Returns a reverse iterator to the end of the string.&lt;/li&gt;
+  &lt;li&gt;rend() 	Returns a reverse iterator to the begining of the string.&lt;/li&gt;
+  &lt;li&gt;replace() 	Replaces a set of positions in the string with a given value.&lt;/li&gt;
+  &lt;li&gt;reserve() 	Sets the minimum capacity of the string.&lt;/li&gt;
+  &lt;li&gt;resize() 	Alters the size of the string and initiates new positions.&lt;/li&gt;
+  &lt;li&gt;rfind() 	Searches the string in reverse order for the first occurence of a string.&lt;/li&gt;
+  &lt;li&gt;size() 	Returns the number of elements in the string.&lt;/li&gt;
+  &lt;li&gt;substr() 	Returns a substring of the string starting at a given index and with a given size.&lt;/li&gt;
+  &lt;li&gt;swap() 	Substitutes the elements of the string with the elements of another string.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/&quot;&gt;geeksforgeeks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;https://courses.cs.washington.edu/courses/cse351/14sp/sections/1/Cheatsheet-c.pdf&lt;/li&gt;
+  &lt;li&gt;https://courses.cs.washington.edu/courses/cse351/14sp/sections/1/Cheatsheet-c.pdf&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+				<pubDate>Thu, 25 Oct 2018 00:00:00 +0530</pubDate>
+				<link>http://localhost:4000/placementsmcq/2018/10/25/stringsCheatSheet.html</link>
+				<guid isPermaLink="true">http://localhost:4000/placementsmcq/2018/10/25/stringsCheatSheet.html</guid>
+			</item>
+		
+	</channel>
+</rss>

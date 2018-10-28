@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>The Week Before Semester</title>
+	<link rel="icon" href="/assets/images/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">The Week Before Semester</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">Home</a></li>
+                    <li class="active"><a href="/archive.html">Archive</a></li>
+                    <li class="active"><a href="/categories.html">Categories</a></li>
+                    <li class="active"><a href="/tags.html">Tags</a></li>
+                    <li class="active"><a href="/about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-3 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/Logo.png" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        This is all you need for your semester exams
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>Top Posts</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>Recent Posts</h1>
+    <ul>
+        
+          <li><a href="/bigdata/2018/10/28/HadoopDistributedFilesystem.html">Introduction and The Design of HDFS</a></li>
+        
+          <li><a href="/bigdata/2018/10/28/HDFSConcepts.html">HDFS Concepts</a></li>
+        
+          <li><a href="/placementsmcq/2018/10/25/stringsCheatSheet.html">Strings</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>Contributors</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://github.com/aurimusblack">
+      Aurimus
+    </a>
+  </li> 
+  
+  <li>
+    <a href="https://github.com/vanithakunta">
+      Vanessa
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-9">
+                
+<div class="well article">
+        <h2><a href="/bigdata/2018/10/28/HDFSConcepts.html">HDFS Concepts</a></h2>
+        <span class="post-date">
+            
+            October-28-2018
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h2 id="blocks">Blocks</h2>
+
+<p><br />
+<img src="/assets/images/block.jpg" alt="Failover" height="281px" width="507px" align="center" />
+<br />
+<br /></p>
+
+<p><b>blocksize: </b> The minimum amount of data that a disk can read/write. This is usually hidden from the user.</p>
+<ul>
+  <li>file system: few kilobytes.</li>
+  <li>disk: 512 bytes.</li>
+</ul>
+
+<p>In HDFS,</p>
+<ul>
+  <li>The <i>default block size is 128 MB</i>. This large size is to minimize the cost of seeks.</li>
+  <li>Files(large) in HDFS are <i>broken into blocks</i> and stored as independent units.</li>
+  <li>If a file is smaller than a single block. Unlike file systems it doesnt occupy a full block of undelying storage.</li>
+</ul>
+
+<p>This <b>block abstraction</b> has several advantages:</p>
+<ul>
+  <li>A file can be larger than any single disk in the distributed system</li>
+  <li>It simplifies the storage subsystem as,
+    <ul>
+      <li>Its easy to calculate how many blocks can be stored at a single node.</li>
+      <li>Eliminates metadata concern(as blocks are simple chunks of data are not a file anymore).</li>
+    </ul>
+  </li>
+  <li>Blocks can be replicated (default value is 3) to make the system available and fault tolerant.</li>
+</ul>
+
+<h2 id="name-nodes-and-data-nodes">Name Nodes and Data Nodes</h2>
+
+<p>HDFS cluster is made up of two types of nodes which work in a master worker fashion. They are:</p>
+<ul>
+  <li>Name node</li>
+  <li>Data node</li>
+</ul>
+
+<p>The client is presented with a file system interface to interact with HDFS so the functioning of name node and data node is transparent.</p>
+
+<h3 id="name-node">Name Node:</h3>
+<ul>
+  <li>manages the file system namespace</li>
+  <li>maintains file system tree and meta data for all the files and directories</li>
+  <li>The above information is stored persistantly on the disk as two files:
+    <ul>
+      <li>Namespace image</li>
+      <li>edit log</li>
+    </ul>
+  </li>
+  <li>Also has infomation about rhe locations of data nodes on which a file’s blocks are stored.</li>
+</ul>
+
+<h3 id="datanode">Datanode:</h3>
+<ul>
+  <li>workhorses of the system.</li>
+  <li>store &amp; retrive blocks when told to</li>
+  <li>Periodically report to namenode what blocks they are holding.</li>
+</ul>
+
+<p>Without name node HDFS can’t be used. Hence it is important to make namenode resilient to failure. Hadoop supports two ways of doing this:</p>
+<ul>
+  <li><b>Backup files that make up the persistant state of the systems metadata</b>(back up metadata):
+    <ul>
+      <li>hadoop can be configured to write persisant state infomation to multiple Files systems i.e to local disk as well as a Network Files system mount(attached).</li>
+      <li>These writes need to be <b>synchronous</b> and <b>atomic</b></li>
+    </ul>
+  </li>
+  <li>Have a <b>Secondary Name Node:</b>
+    <ul>
+      <li>despite of the name it doesn’t act as a name node.</li>
+      <li><b>main role:</b> Periodically merge the namespace image with edit log to prevent it from becoming too large and keep a copy of the merged image.</li>
+      <li>It runs on a seperate physical machine.</li>
+      <li>The state of SNN lags from that of primary. So incase of NN failure data loss is certain.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Hence, if the NN fails we copy the metadata files on NFS to SNN and run it as primary.</p>
+
+<h2 id="hdfs-federation">HDFS Federation</h2>
+
+<p>Name node stores reference to every file’s blocks in the file system. So, if a file system has large number of files the memory becomes and issue. <b>#federationTotheRescue</b>:</p>
+<ul>
+  <li>Federation allows clustes to scale by adding name nodes to manage a portion of the file system.</li>
+  <li>Each name node manages a seperate namespace volume. Which is made up of:
+    <ul>
+      <li><b>namespace metadata</b></li>
+      <li><b>block pool:</b> blocks for each files</li>
+    </ul>
+  </li>
+  <li>Ex: one name node can manage the files and directories under /user, the other under /share etc.</li>
+  <li>NSV are independent of each other:
+    <ul>
+      <li>failure of one doesnt affect each other.</li>
+    </ul>
+  </li>
+  <li>However the block pools are not partioned i.e data nodes store blocks from multiple federations.</li>
+</ul>
+
+<h2 id="high-availability">High Availability</h2>
+
+<p><br />
+<img src="/assets/images/highAvailability.jpg" alt="Failover" height="281px" width="507px" align="center" />
+<br />
+<br /></p>
+
+<p>Name node is the <b>SPOF</b>(single point of failure) of HDFS. If a name node fails:</p>
+<ul>
+  <li>All clients can’t read, write or list files as it is the sole repository of metadata</li>
+  <li>Hence, whole HDFS is out of service.</li>
+</ul>
+
+<p>So if a name node fails, To recover:</p>
+<ul>
+  <li>Admin starts a new name node with one of the file system metadata replicas. However this new name node wont serve until:
+    <ul>
+      <li>It has loaded namespace image into memory.</li>
+      <li>replayed the edit log.</li>
+      <li>receives enough block reports from data nodes to leave safe mode.</li>
+    </ul>
+  </li>
+  <li>And configures the data nodes and clients to use this name node.</li>
+</ul>
+
+<p>The above recovery process for a sufficiently large cluster takes atleast 30min. Hadoop solved this problem by adding support for <b>High Availability</b>. However this requires a few changes:</p>
+
+<ul>
+  <li>There are a pair of name nodes:
+    <ul>
+      <li>one active</li>
+      <li>one standby: if active fails it takes over without a signficant delay.</li>
+    </ul>
+  </li>
+  <li>These name nodes must use <b>highly available shared storage</b></li>
+  <li>Data nodes must send block reports to both name nodes</li>
+  <li>Client must be configured to handle failure.</li>
+</ul>
+
+<p>There are two choices for highly available shared storage:</p>
+<ul>
+  <li><b>NFS filer</b></li>
+  <li><b>Quorum Journal Manager(QJM):</b>
+    <ul>
+      <li>runs a group of journal nodes. Typically 3</li>
+      <li>each edit must be written to a majority of journal nodes.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="failover-and-fencing">Failover and Fencing</h3>
+
+<p>The transistion from active to stand by name nodes is manageb by an entity known as failover controller. default is ZooKeeper Implementation(ensure only one name node is active).</p>
+
+<p>Each name node runs a light weight failover controller process whose job is to monitor and trigger a failover if it fails.</p>
+
+<p>This failure can be issued manually in case of maintainence. This is known as <b>graceful failure</b>. Since failover controller arranges transistion for name nodes to switch roles.</p>
+
+<p><br />
+<img src="/assets/images/failover.gif" alt="Failover" />
+<br />
+<br /></p>
+
+<p>Incase, of an <b>ungraceful failover:</b></p>
+<ul>
+  <li>It is impossible to know whether failed namenode has stopped running.</li>
+  <li>“The process of preventing the previously active namenode from casuing corruption” - <b>#fencing</b>. Some fencing mechanisms are :</li>
+  <li>Revoking name node access to shared storage.</li>
+  <li>Disabling its network port.</li>
+  <li>STONITH: “Shoot the other node in the Head”. Forcibly shutdown the host machine.</li>
+</ul>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                BigData <span>(2)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                hadoop <span>(2)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                HDFS <span>(2)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                block <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                federation <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                namenode <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                datanode <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                caching <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                availability <span>(1)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/bigdata/2018/10/28/HadoopDistributedFilesystem.html" class="next">Newer Post</a>
+    
+    
+    <a class="btn btn-default" href="/placementsmcq/2018/10/25/stringsCheatSheet.html" class="previous">Older Post</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2018 The Week Before Semester , Powered by
+            
+                <a href="http://jekyllrb.com/">
+                Jekyll
+                </a>
+                <!-- not the last, output a ',' -->
+                
+                ,
+                
+            
+                <a href="http://getbootstrap.com/">
+                Bootstrap
+                </a>
+                <!-- not the last, output a ',' -->
+                
+                ,
+                
+            
+                <a href="https://github.com/">
+                Github
+                </a>
+                <!-- not the last, output a ',' -->
+                
+                ,
+                
+            
+                <a href="https://github.com/zxixia/jekyll-xixia">
+                Xixia
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

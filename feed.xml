@@ -7,7 +7,203 @@
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
-				<title>Introduction and The Design of HDFS</title>
+				<title>Services Provided By GSM</title>
+				<description>&lt;h2 id=&quot;mobile-services&quot;&gt;&lt;b&gt;Mobile Services&lt;/b&gt;&lt;/h2&gt;
+
+&lt;p&gt;GSM defined 3 diffrent categories of services:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Bearer&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Tele&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Supplementary&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Reference Model:&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/referenceModel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;strong&gt;Mobile Station(MS)&lt;/strong&gt; is connected to &lt;strong&gt;GSM Public Land Mobile Network(PLMN)&lt;/strong&gt; via the U&lt;sub&gt;m&lt;/sub&gt; interface.&lt;/li&gt;
+  &lt;li&gt;This network is connected to the Trasnit Network ISDN / PSTN.&lt;/li&gt;
+  &lt;li&gt;Which is then connected to the &lt;strong&gt;Mobile Terminal(TE)&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;There might be a source/destination in between.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;bearer-services&quot;&gt;&lt;b&gt;Bearer Services&lt;/b&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Comprises of all the services for        transparent transmission of data between interfaces to network
+    &lt;ul&gt;
+      &lt;li&gt;Ex: S - MS , U,S,R - ISDN&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In classic GSM transmission was connection oriented (packet / circuit switched).&lt;/li&gt;
+  &lt;li&gt;They only need the lower three layes of OSI Model.&lt;/li&gt;
+  &lt;li&gt;Permit the following types of data transfer:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Transparent&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Non Transparent&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Synchronous&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Asynchronous&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Transparent Data Transfer:&lt;/b&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Only uses physical layer&lt;/li&gt;
+      &lt;li&gt;Transmission has constant delay &amp;amp; throughtput&lt;/li&gt;
+      &lt;li&gt;To increase transmission quality, It user &lt;b&gt;Forward Error Correction(FEC)&lt;/b&gt; which encodes redundancy into data stream.&lt;/li&gt;
+      &lt;li&gt;If error is encountered it simply reconstructs using redundant data.&lt;/li&gt;
+      &lt;li&gt;Data rates of 2.4,4.8 and 9.6 kbits/s are possible&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Non Transparent Data Transfer:&lt;/b&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Use protocols of layer2 and layer 3 to implement erro correction and flow control&lt;/li&gt;
+      &lt;li&gt;Uses transparent &lt;b&gt;data transfer + Radio Link Protocol(RLP)&lt;/b&gt;&lt;/li&gt;
+      &lt;li&gt;RLP has mechanisms like &lt;b&gt;high level datalink control HDLC, selective rejection&lt;/b&gt; to trigger retransmission of data&lt;/li&gt;
+      &lt;li&gt;bit error rate is &amp;lt; 10&lt;sup&gt;-7&lt;/sup&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;b&gt; Synchronous and Asynchronous Data Transfer&lt;/b&gt;:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;both provide full duplex communication.&lt;/li&gt;
+      &lt;li&gt;Synchronous provides data rates of 1.2, 2.4, 4.8, 9.6 kbits/s&lt;/li&gt;
+      &lt;li&gt;Asynchronous supports data rates from 3000 - 9600 bits/s&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tele-services&quot;&gt;&lt;b&gt;Tele Services&lt;/b&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;GSM mainly focuses on voice oriented services:
+    &lt;ul&gt;
+      &lt;li&gt;Encrypted voice transmission&lt;/li&gt;
+      &lt;li&gt;message services&lt;/li&gt;
+      &lt;li&gt;data communication to PSTN, ISDN&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;However the main service is &lt;strong&gt;telephony&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;GSM provides a feature called &lt;strong&gt;Emergency Number&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;mandatory and free for all.&lt;/li&gt;
+      &lt;li&gt;highest priority, when initiated every connection is premptied.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Another service provided by GSM is &lt;strong&gt;Short Message Service(SMS)&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Support upto 160 characters&lt;/li&gt;
+      &lt;li&gt;uses unused capacity in signalling channels for transmission&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Extended Message Service&lt;/strong&gt; is the succesor of SMS which supports larger transmission size and has support for formatted text, animated pics etc.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Multimedia Message Service&lt;/strong&gt; offers transmission of larger pictures short video clips etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;supplementary-services&quot;&gt;&lt;b&gt;Supplementary Services&lt;/b&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Offer various enhancements
+for the standard telephony service:
+    &lt;ul&gt;
+      &lt;li&gt;user identification.&lt;/li&gt;
+      &lt;li&gt;call redirection.&lt;/li&gt;
+      &lt;li&gt;forwarding of ongoing calls.&lt;/li&gt;
+      &lt;li&gt;support for closed groups.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+				<pubDate>Sat, 03 Nov 2018 00:00:00 +0530</pubDate>
+				<link>http://localhost:4000/mobilecomputing/2018/11/03/ServicesProvidedByGSM.html</link>
+				<guid isPermaLink="true">http://localhost:4000/mobilecomputing/2018/11/03/ServicesProvidedByGSM.html</guid>
+			</item>
+		
+			<item>
+				<title>Introduction to GSM</title>
+				<description>&lt;h2 id=&quot;cellular-networks&quot;&gt;Cellular Networks&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2lmd0h.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;wireless extensions of traditional PSTN(Public Switched Telephonic Networks) and ISDN(Integrated Services Digital Network) networks #telephones(wired).&lt;/li&gt;
+  &lt;li&gt;mostly used for voice traffic&lt;/li&gt;
+  &lt;li&gt;basic versions implement a circuit switched service
+    &lt;ul&gt;
+      &lt;li&gt;focused on voice&lt;/li&gt;
+      &lt;li&gt;data - 9.6 kbits/s&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;development-of-mobile-communication-technologies&quot;&gt;Development of mobile communication technologies&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;First generation:&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;relied on FDMA&lt;/li&gt;
+      &lt;li&gt;ex: CT0/1, AMPS, NMT&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Second generation:&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Added TDMA(used for channel seperation) to FDMA&lt;/li&gt;
+      &lt;li&gt;AMPS evolved into D-AMPS&lt;/li&gt;
+      &lt;li&gt;NMT added TDMA and evolved to GSM&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Third Generation:&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Second generation evolved over time and added CDMA later.&lt;/li&gt;
+      &lt;li&gt;GRPS - introduced higher data rates for GSM&lt;/li&gt;
+      &lt;li&gt;EDGE - proposed a new modulation scheme&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;gsm&quot;&gt;GSM&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Most successful digital mobile telecommunication system in the world today.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Groupe special mobile(GSM)&lt;/strong&gt; - later renamed to &lt;strong&gt;Global System for Mobile Communication&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Primary Goal:&lt;/b&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;&lt;i&gt;Provide a mobile phone system that allows users to roam throughout europe &amp;amp; provide compatibility with ISDN &amp;amp; PSTN systems&lt;/i&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Second Generation System was mainly designed for voice services
+    &lt;ul&gt;
+      &lt;li&gt;Intially deployed as &lt;b&gt;GSM 900&lt;/b&gt;
+        &lt;ul&gt;
+          &lt;li&gt;890 - 915 MHz for uplinks&lt;/li&gt;
+          &lt;li&gt;935 - 960 MHz for downlinks&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Later as &lt;b&gt;GSM 1800 - Digital Cellular System&lt;/b&gt;
+        &lt;ul&gt;
+          &lt;li&gt;1710 - 1785 MHz uplinks&lt;/li&gt;
+          &lt;li&gt;1805 - 1880 MHz downlinks&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;In US &lt;b&gt;GSM 1900 - Personal Communication Service&lt;/b&gt;
+        &lt;ul&gt;
+          &lt;li&gt;1850 - 1910 MHz uplinks&lt;/li&gt;
+          &lt;li&gt;1930 - 1990 MHz downlinks&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+				<pubDate>Fri, 02 Nov 2018 00:00:00 +0530</pubDate>
+				<link>http://localhost:4000/mobilecomputing/2018/11/02/IndroductionToGSM.html</link>
+				<guid isPermaLink="true">http://localhost:4000/mobilecomputing/2018/11/02/IndroductionToGSM.html</guid>
+			</item>
+		
+			<item>
+				<title>The HDFS</title>
 				<description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;&lt;b&gt;Distributed File Systems:&lt;/b&gt; Filesystems that manage the storage across a network of machines.&lt;/p&gt;
@@ -16,7 +212,7 @@
 
 &lt;h2 id=&quot;the-design-of-hdfs&quot;&gt;The Design of HDFS&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HDFS is a filesystem designed for storing very large files with streaming data access patterns, running on clusters of commodity hardware
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;HDFS is a filesystem designed for storing very large files with streaming data access patterns, running on clusters of commodity hardware&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;b&gt;Streaming data access:&lt;/b&gt;&lt;/p&gt;
@@ -29,11 +225,6 @@
 
 &lt;p&gt;Hence HDFS is not suitable for applications which require:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Low latency data access.&lt;/li&gt;
-  &lt;li&gt;Working with a lot of small files.&lt;/li&gt;
-  &lt;li&gt;Multiple writers and lot of random modifications to files.&lt;/li&gt;
-&lt;/ul&gt;
 </description>
 				<pubDate>Sun, 28 Oct 2018 00:00:00 +0530</pubDate>
 				<link>http://localhost:4000/bigdata/2018/10/28/HadoopDistributedFilesystem.html</link>
@@ -43,9 +234,8 @@
 			<item>
 				<title>HDFS Concepts</title>
 				<description>&lt;h2 id=&quot;blocks&quot;&gt;Blocks&lt;/h2&gt;
-
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;/assets/images/block.jpg&quot; alt=&quot;Failover&quot; height=&quot;281px&quot; width=&quot;507px&quot; align=&quot;center&quot; /&gt;
+&lt;img src=&quot;/assets/images/block.jpg&quot; alt=&quot;Failover&quot; width=&quot;507px&quot; height=&quot;281px&quot; align=&quot;middle&quot; /&gt;
 &lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
@@ -147,7 +337,7 @@
 &lt;h2 id=&quot;high-availability&quot;&gt;High Availability&lt;/h2&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;/assets/images/highAvailability.jpg&quot; alt=&quot;Failover&quot; height=&quot;281px&quot; width=&quot;507px&quot; align=&quot;center&quot; /&gt;
+&lt;img src=&quot;/assets/images/highAvailability.jpg&quot; alt=&quot;Failover&quot; width=&quot;507px&quot; height=&quot;281px&quot; align=&quot;middle&quot; /&gt;
 &lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
@@ -371,9 +561,9 @@ int main(){
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/&quot;&gt;geeksforgeeks&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;https://courses.cs.washington.edu/courses/cse351/14sp/sections/1/Cheatsheet-c.pdf&lt;/li&gt;
-  &lt;li&gt;https://courses.cs.washington.edu/courses/cse351/14sp/sections/1/Cheatsheet-c.pdf&lt;/li&gt;
+  &lt;li&gt;[https://www.geeksforgeeks.org/]&lt;/li&gt;
+  &lt;li&gt;[https://courses.cs.washington.edu/courses/cse351/14sp/sections/1/Cheatsheet-c.pdf]&lt;/li&gt;
+  &lt;li&gt;[https://courses.cs.washington.edu/courses/cse351/14sp/sections/1/Cheatsheet-c.pdf]&lt;/li&gt;
 &lt;/ul&gt;
 </description>
 				<pubDate>Thu, 25 Oct 2018 00:00:00 +0530</pubDate>

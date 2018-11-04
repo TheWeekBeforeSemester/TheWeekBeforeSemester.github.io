@@ -33,7 +33,7 @@
 
 &lt;h3 id=&quot;bearer-services&quot;&gt;&lt;b&gt;Bearer Services&lt;/b&gt;&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Comprises of all the services for        transparent transmission of data between interfaces to network
+  &lt;li&gt;Comprises of all the services for transparent transmission of data between interfaces to network
     &lt;ul&gt;
       &lt;li&gt;Ex: S - MS , U,S,R - ISDN&lt;/li&gt;
     &lt;/ul&gt;
@@ -59,7 +59,7 @@
   &lt;/li&gt;
   &lt;li&gt;&lt;b&gt;Non Transparent Data Transfer:&lt;/b&gt;
     &lt;ul&gt;
-      &lt;li&gt;Use protocols of layer2 and layer 3 to implement erro correction and flow control&lt;/li&gt;
+      &lt;li&gt;Use protocols of layer2 and layer 3 to implement error correction and flow control&lt;/li&gt;
       &lt;li&gt;Uses transparent &lt;b&gt;data transfer + Radio Link Protocol(RLP)&lt;/b&gt;&lt;/li&gt;
       &lt;li&gt;RLP has mechanisms like &lt;b&gt;high level datalink control HDLC, selective rejection&lt;/b&gt; to trigger retransmission of data&lt;/li&gt;
       &lt;li&gt;bit error rate is &amp;lt; 10&lt;sup&gt;-7&lt;/sup&gt;&lt;/li&gt;
@@ -99,14 +99,13 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Extended Message Service&lt;/strong&gt; is the succesor of SMS which supports larger transmission size and has support for formatted text, animated pics etc.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Multimedia Message Service&lt;/strong&gt; offers transmission of larger pictures short video clips etc.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Multimedia Message Service&lt;/strong&gt; offers transmission of larger pictures, short video clips etc.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;supplementary-services&quot;&gt;&lt;b&gt;Supplementary Services&lt;/b&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Offer various enhancements
-for the standard telephony service:
+  &lt;li&gt;Offer various enhancements for the standard telephony service:
     &lt;ul&gt;
       &lt;li&gt;user identification.&lt;/li&gt;
       &lt;li&gt;call redirection.&lt;/li&gt;
@@ -122,14 +121,38 @@ for the standard telephony service:
 			</item>
 		
 			<item>
-				<title>Introduction to GSM</title>
-				<description>&lt;h2 id=&quot;cellular-networks&quot;&gt;Cellular Networks&lt;/h2&gt;
+				<title>GSM Architecture</title>
+				<description>&lt;h2 id=&quot;gsm-architecture&quot;&gt;&lt;strong&gt;GSM Architecture&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;i&gt;
+    The architecture of GSM id &lt;strong&gt;hiearchial, complex&lt;/strong&gt; system architecture compromising of many interfaces and entities.
+&lt;/i&gt;
+It consists of three main sub systems:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2lmd0h.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;wireless extensions of traditional PSTN(Public Switched Telephonic Networks) and ISDN(Integrated Services Digital Network) networks #telephones(wired).&lt;/li&gt;
-  &lt;li&gt;mostly used for voice traffic&lt;/li&gt;
-  &lt;li&gt;basic versions implement a circuit switched service
+  &lt;li&gt;&lt;a href=&quot;/mobilecomputing/2018/11/03/RadioSubSystem.html&quot;&gt;Radio Sub System(RSS)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;(/mobilecomputing/2018/11/03/NetworkSwitchingAndSubSystem.html)&quot;&gt;Network Switching and Subsystem(NSS)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;(/mobilecomputing/2018/11/03/RadioSubSystem.html)&quot;&gt;Operating Sub System(OSS)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;How the customer only notices the Mobile station and some exposed BTS as antennas.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/GSMArchitecture.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+				<pubDate>Sat, 03 Nov 2018 00:00:00 +0530</pubDate>
+				<link>http://localhost:4000/mobilecomputing/2018/11/03/GSMArchitecture.html</link>
+				<guid isPermaLink="true">http://localhost:4000/mobilecomputing/2018/11/03/GSMArchitecture.html</guid>
+			</item>
+		
+			<item>
+				<title>Introduction to GSM</title>
+				<description>&lt;h2 id=&quot;cellular-networks&quot;&gt;&lt;strong&gt;Cellular Networks&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2lmd0h.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Wireless extensions of traditional PSTN(Public Switched Telephonic Networks) and ISDN(Integrated Services Digital Network) networks #telephones(wired).&lt;/li&gt;
+  &lt;li&gt;Mostly used for voice traffic&lt;/li&gt;
+  &lt;li&gt;Basic versions implement a circuit switched service
     &lt;ul&gt;
       &lt;li&gt;focused on voice&lt;/li&gt;
       &lt;li&gt;data - 9.6 kbits/s&lt;/li&gt;
@@ -172,7 +195,7 @@ for the standard telephony service:
       &lt;p&gt;&lt;i&gt;Provide a mobile phone system that allows users to roam throughout europe &amp;amp; provide compatibility with ISDN &amp;amp; PSTN systems&lt;/i&gt;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
-  &lt;li&gt;Second Generation System was mainly designed for voice services
+  &lt;li&gt;It is a Second Generation system and it was mainly designed for voice services
     &lt;ul&gt;
       &lt;li&gt;Intially deployed as &lt;b&gt;GSM 900&lt;/b&gt;
         &lt;ul&gt;
@@ -195,7 +218,6 @@ for the standard telephony service:
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
-
 </description>
 				<pubDate>Fri, 02 Nov 2018 00:00:00 +0530</pubDate>
 				<link>http://localhost:4000/mobilecomputing/2018/11/02/IndroductionToGSM.html</link>
